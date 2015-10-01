@@ -45,6 +45,7 @@ def create_venv(pyvenv_dir):
 def pip_install(pyvenv_dir):
     last_requirements = path.join(pyvenv_dir, REQUIREMENTS)
     shutil.copy(REQUIREMENTS_PATH, last_requirements)
+    activate_venv(pyvenv_dir, ["pip", "install", "vebootstrap"])
     activate_venv(pyvenv_dir, ["pip", "install", "-r", REQUIREMENTS_PATH])
 
 
