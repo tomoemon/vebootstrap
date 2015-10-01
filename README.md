@@ -28,7 +28,7 @@ Running that script, it creates a virtualenv and modules will be installed autom
 Example
 --------------
 
-#Case: you want to create a script using `requests` module. (http request library)
+**Case: you want to create a script using `requests` module. (http request library)**
 
 Create a script file (eg. get\_yahoo.py)
 
