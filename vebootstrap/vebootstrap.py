@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
+from os import path
 import sys
 import shutil
 import subprocess
-from os import path
 
 
 MAIN_DIR = path.dirname(path.abspath(sys.argv[0]))
 MAJOR_VERSION = sys.version_info[0]
 REQUIREMENTS = "requirements.txt"
-REQUIREMENTS_PATH = path.join(MAIN_DIR, REQUIREMENTS)
-DEVNULL = open(os.devnull, 'w')
+CURRENT_REQUIREMENTS = path.join(MAIN_DIR, REQUIREMENTS)
 
 
 #
@@ -26,10 +25,9 @@ else:
     SHELL = False
 
 
-def shell_execute(cmd, env=None, stdout=None):
+def shell_execute(cmd, env={}, stdout=None):
     new_env = os.environ.copy()
-    if env:
-        new_env.update(env)
+    new_env.update(env)
     return subprocess.call(cmd, env=new_env, shell=SHELL, stdout=stdout)
 
 
@@ -38,15 +36,15 @@ def create_venv(pyvenv_dir):
     if shell_execute([sys.executable, "-m", virtualenv, pyvenv_dir]) != 0:
         raise Exception("cannot create virtualenv")
 
-    if not os.access(REQUIREMENTS_PATH, os.F_OK):
-        open(REQUIREMENTS_PATH, "wb").close()
+    if not os.access(CURRENT_REQUIREMENTS, os.F_OK):
+        open(CURRENT_REQUIREMENTS, "wb").close()
 
 
 def pip_install(pyvenv_dir):
     last_requirements = path.join(pyvenv_dir, REQUIREMENTS)
-    shutil.copy(REQUIREMENTS_PATH, last_requirements)
+    shutil.copy(CURRENT_REQUIREMENTS, last_requirements)
     activate_venv(pyvenv_dir, ["pip", "install", "vebootstrap"])
-    activate_venv(pyvenv_dir, ["pip", "install", "-r", REQUIREMENTS_PATH])
+    activate_venv(pyvenv_dir, ["pip", "install", "-r", CURRENT_REQUIREMENTS])
 
 
 def pip_uninstall(pyvenv_dir):
@@ -61,7 +59,7 @@ def should_update_packages(pyvenv_dir):
         return stat.st_mtime
 
     old_package_updated_time = get_updated_time(path.join(pyvenv_dir, REQUIREMENTS))
-    new_package_updated_time = get_updated_time(REQUIREMENTS_PATH)
+    new_package_updated_time = get_updated_time(CURRENT_REQUIREMENTS)
     return old_package_updated_time < new_package_updated_time
 
 
