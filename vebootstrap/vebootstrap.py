@@ -15,6 +15,7 @@ CURRENT_REQUIREMENTS = path.join(MAIN_DIR, REQUIREMENTS)
 if os.name == 'nt':
     BIN_PATH = "Scripts"
     PATH_SEPARATOR = ";"
+    # In order to enable PATH environment
     SHELL = True
 else:
     BIN_PATH = "bin"
