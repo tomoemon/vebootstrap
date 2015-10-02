@@ -7,14 +7,11 @@ import subprocess
 
 
 MAIN_DIR = path.dirname(path.abspath(sys.argv[0]))
-MAJOR_VERSION = sys.version_info[0]
 REQUIREMENTS = "requirements.txt"
 CURRENT_REQUIREMENTS = path.join(MAIN_DIR, REQUIREMENTS)
 
 
-#
 # os detection
-#
 if os.name == 'nt':
     BIN_PATH = "Scripts"
     PATH_SEPARATOR = ";"
@@ -25,6 +22,13 @@ else:
     SHELL = False
 
 
+# version detection
+if sys.version_info[0] == 2:
+    VIRTUALENV = "virtualenv"
+else:
+    VIRTUALENV = "venv"
+
+
 def shell_execute(cmd, env={}, stdout=None):
     new_env = os.environ.copy()
     new_env.update(env)
@@ -32,8 +36,7 @@ def shell_execute(cmd, env={}, stdout=None):
 
 
 def create_venv(pyvenv_dir):
-    virtualenv = "virtualenv" if MAJOR_VERSION == 2 else "venv"
-    if shell_execute([sys.executable, "-m", virtualenv, pyvenv_dir]) != 0:
+    if shell_execute([sys.executable, "-m", VIRTUALENV, pyvenv_dir]) != 0:
         raise Exception("cannot create virtualenv")
 
     if not os.access(CURRENT_REQUIREMENTS, os.F_OK):
