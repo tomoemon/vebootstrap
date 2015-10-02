@@ -8,7 +8,7 @@ setup(
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
     scripts=[],
-    install_requires=[],
+    install_requires=['virtualenv'],
     description = 'Virtualenv bootstrapper',
     long_description = 'Importing this module automatically create virtualenv environment and apply requirements.txt',
     url = 'https://github.com/tomoemon/vebootstrap',
