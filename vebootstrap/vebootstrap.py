@@ -30,9 +30,7 @@ else:
 
 
 def shell_execute(cmd, env={}, stdout=None):
-    new_env = os.environ.copy()
-    new_env.update(env)
-    return subprocess.call(cmd, env=new_env, shell=SHELL, stdout=stdout)
+    return subprocess.call(cmd, env=dict(os.environ, **env), shell=SHELL, stdout=stdout)
 
 
 def create_venv(pyvenv_dir):
