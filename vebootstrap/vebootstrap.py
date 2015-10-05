@@ -79,7 +79,7 @@ def bootstrap():
         return
 
     sys.argv.append(BOOTSTRAP_OPTION)
-    pyvenv_dir = path.join(MAIN_DIR, "__pyvenv__")
+    pyvenv_dir = path.join(MAIN_DIR, "__py{0}{1}venv__".format(sys.version_info[0], sys.version_info[1]))
 
     if not os.access(pyvenv_dir, os.F_OK):
         create_venv(pyvenv_dir)
