@@ -1,16 +1,19 @@
 # -*- encoding:utf-8 -*-
+import os
 from os import path
 import codecs
 from setuptools import setup
 
 
-with codecs.open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
+long_description = ""
+if os.access(path.join(path.dirname(__file__), 'README.md'), os.F_OK):
+    with codecs.open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
 
 
 setup(
     name='vebootstrap',
-    version='0.0.7',
+    version='0.0.8',
     author='tomoemon',
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
