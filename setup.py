@@ -10,7 +10,7 @@ with codecs.open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8
 
 setup(
     name='vebootstrap',
-    version='0.0.6',
+    version='0.0.7',
     author='tomoemon',
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
