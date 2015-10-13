@@ -19,11 +19,19 @@ Setup
 Usage
 --------------
 
+**Importing**
+
 Insert following line into head of your script file, and create a `requirements.txt` in same directory as necessary.
 
     import vebootstrap
 
 Running that script, it creates a virtualenv and modules will be installed automatically.
+
+**Not Importing**
+
+If you do not want to add a line, run following command and then virtualenv will be prepared.
+
+    python -m vebootstrap [script file]
 
 Example
 --------------

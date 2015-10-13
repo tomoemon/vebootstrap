@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='vebootstrap',
-    version='0.0.4',
+    version='0.0.5',
     author='tomoemon',
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
@@ -16,11 +16,11 @@ setup(
     platforms = ['POSIX', 'Windows', 'Mac OS X'],
     zip_safe=False,
     classifiers=[
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'Operating System :: POSIX',
           'Operating System :: Microsoft :: Windows',
-          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3',
           'License :: OSI Approved :: MIT License',
           'Topic :: Utilities',
