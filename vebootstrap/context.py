@@ -22,12 +22,12 @@ class Context(object):
 
         # os detection
         if os.name == 'nt':
-            self.bin_path = "Scripts"
+            self.bin_path = path.join(self.pyvenv_dir, "Scripts")
             self.path_separator = ";"
             # In order to enable PATH environment
             self.shell = True
         else:
-            self.bin_path = "bin"
+            self.bin_path = path.join(self.pyvenv_dir, "bin")
             self.path_separator = ":"
             self.shell = False
 

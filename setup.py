@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='vebootstrap',
-    version='0.0.5',
+    version='0.0.6',
     author='tomoemon',
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
