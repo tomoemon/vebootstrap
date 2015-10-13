@@ -4,7 +4,7 @@ import codecs
 from setuptools import setup
 
 
-with codecs.open(path.join(path.dirname(__file__), 'README.txt'), encoding='utf-8') as f:
+with codecs.open(path.join(path.dirname(__file__), 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
