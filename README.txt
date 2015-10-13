@@ -53,5 +53,5 @@ Run a script
     python get_yahoo.py
 
 At the first time, virtualenv will be created and modules will be installed.
-And You get a first line of html of the Yahoo.
+And you get a first line of html of the Yahoo.
 
