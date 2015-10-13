@@ -1,18 +1,18 @@
 Virtualenv Bootstrapper
 ========================
 
-When you are about to create a python program with some pip modules, you may setup virtualenv and install some pip modules within that virtualenv manually. If you use this module, you can take virtualenv automatically.
+When you are about to create a python program with some pip modules, you may setup virtualenv and install some pip modules within that virtualenv manually. This module automatically creates an environment and enables it.
 
 Setup
 -------------
 
-### Requirements
+**Requirements**
 
 * python
 * pip
 * virtualenv
 
-### Installation
+**Installation**
 
     $ pip install vebootstrap
 

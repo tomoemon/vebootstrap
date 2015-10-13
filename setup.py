@@ -1,5 +1,12 @@
 # -*- encoding:utf-8 -*-
+from os import path
+import codecs
 from setuptools import setup
+
+
+with codecs.open(path.join(path.dirname(__file__), 'README.txt'), encoding='utf-8') as f:
+    long_description = f.read()
+
 
 setup(
     name='vebootstrap',
@@ -10,7 +17,7 @@ setup(
     scripts=[],
     install_requires=['virtualenv'],
     description = 'Virtualenv bootstrapper',
-    long_description = 'Importing this module automatically create virtualenv environment and apply requirements.txt',
+    long_description = long_description,
     url = 'https://github.com/tomoemon/vebootstrap',
     license = 'MIT',
     platforms = ['POSIX', 'Windows', 'Mac OS X'],
