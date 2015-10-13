@@ -55,3 +55,14 @@ Run a script
 At the first time, virtualenv will be created and modules will be installed.
 And you get a first line of html of the Yahoo.
 
+Extra Usage
+--------------
+
+`vebootstrap` supports creating virtualenv bootstrap script. Run a following command in your scripting directory. The bootstrap script involving `requirements.txt` will be created.
+
+    python -m vebootstrap.create
+
+`--after-install` option allows you to add another process into the bootstrap script. Please see help.
+
+    python -m vebootstrap.create --help
+
