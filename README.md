@@ -1,7 +1,7 @@
 Virtualenv Bootstrapper
 ========================
 
-When you are about to create a python program with some pip modules, you may setup virtualenv and install some pip modules within that virtualenv manually. This module automatically creates an environment and enables it.
+When you are about to create a python program that depends on some packages, you may setup virtualenv and install some packages within that virtualenv manually. This module automatically creates an environment and installs packages in it.
 
 Setup
 -------------
@@ -52,7 +52,7 @@ Run a script
 
     python get_yahoo.py
 
-At the first time, virtualenv will be created and modules will be installed.
+At first, virtualenv directory will be created and required packages will be installed.
 And you get a first line of html of the Yahoo.
 
 Extra Usage
