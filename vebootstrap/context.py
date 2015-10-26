@@ -15,7 +15,7 @@ class Context(object):
         self.script_dir = path.dirname(self.script_path)
         self.python_exe = path.abspath(python_exe)
         self.pyvenv_dir = path.join(self.script_dir,
-                "__py{0}{1}venv__".format(sys.version_info[0], sys.version_info[1]))
+                ".py{0}{1}venv".format(sys.version_info[0], sys.version_info[1]))
         self.current_requirements = path.join(self.script_dir, self.REQUIREMENTS)
         self.last_requirements = path.join(self.pyvenv_dir, self.REQUIREMENTS)
 
