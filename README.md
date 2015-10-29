@@ -19,7 +19,7 @@ Setup
 Usage
 --------------
 
-**Importing**
+**Importing Pattern**
 
 Insert following line into head of your script file, and create a `requirements.txt` in same directory as necessary.
 
@@ -27,9 +27,9 @@ Insert following line into head of your script file, and create a `requirements.
 
 Running that script, it creates a virtualenv and modules will be installed automatically.
 
-**Not Importing**
+**Not Importing Pattern**
 
-If you do not want to add a line, run following command and then virtualenv will be prepared.
+If you do not want to add a unconcerned line, run following command and then virtualenv will be prepared and activated.
 
     python -m vebootstrap [script file]
 
@@ -40,7 +40,7 @@ Example
 
 Create a script file (eg. get\_yahoo.py)
 
-    import vebootstrap # you must write this sentence at the first line
+    import vebootstrap # you must write this sentence at the first
     import requests
     print(requests.get('http://yahoo.co.jp').content[:100])
 
@@ -57,6 +57,14 @@ And you get a first line of html of the Yahoo.
 
 Extra Usage
 --------------
+
+**Init virtualenv**
+
+Following command initialize virtualenv directory and install modules.
+
+    python -m vebootstrap.init
+
+**Create a virtualenv bootstrap script**
 
 `vebootstrap` supports creating virtualenv bootstrap script. Run a following command in your scripting directory. The bootstrap script involving `requirements.txt` will be created.
 
