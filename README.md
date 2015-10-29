@@ -60,9 +60,9 @@ Extra Usage
 
 `vebootstrap` supports creating virtualenv bootstrap script. Run a following command in your scripting directory. The bootstrap script involving `requirements.txt` will be created.
 
-    python -m vebootstrap.create
+    python -m vebootstrap.create_bootstrap
 
 `--after-install` option allows you to add another process into the bootstrap script. Please see help.
 
-    python -m vebootstrap.create --help
+    python -m vebootstrap.create_bootstrap --help
 
