@@ -110,6 +110,8 @@ class Context(object):
             self.pip_install()
             if os.name == 'nt':
                 self.pywin_install()
+            return True
+        return False
 
     def shell_execute(self, cmd, env={}, stdout=None):
         return subprocess.call(cmd, env=dict(os.environ, **env), shell=self.shell, stdout=stdout)
