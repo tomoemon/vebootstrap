@@ -21,7 +21,6 @@ class Context(object):
         self.current_requirements = path.join(self.script_dir, self.REQUIREMENTS)
         self.last_requirements = path.join(self.pyvenv_dir, self.REQUIREMENTS)
 
-
         # os detection
         if os.name == 'nt':
             self.bin_path = path.join(self.pyvenv_dir, "Scripts")
@@ -38,7 +37,6 @@ class Context(object):
             self.virtualenv = "virtualenv"
         else:
             self.virtualenv = "venv"
-
 
     def create_venv(self):
         if self.shell_execute([self.python_exe, "-m", self.virtualenv, self.pyvenv_dir]) != 0:
@@ -64,7 +62,6 @@ class Context(object):
                     self.current_requirements, line_num))
                 filename = pywin.download(p)
                 self.activate_venv(["pip", "install", filename])
-
 
     def pip_uninstall(self):
         self.activate_venv(["pip", "uninstall", "-r", self.last_requirements, "-y"])
