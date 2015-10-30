@@ -8,7 +8,7 @@ Setup
 
 **Requirements**
 
-* python 2.7 or later
+* python 2.7, 3.3 or later
 * pip
 * virtualenv
 
