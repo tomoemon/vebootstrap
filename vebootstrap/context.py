@@ -15,9 +15,7 @@ class Context(object):
         self.script_dir = path.dirname(self.script_path)
         self.python_exe = path.abspath(python_exe)
         self.pyvenv_dir = path.join(self.script_dir,
-                ".py{0}{1}\\venv".format(sys.version_info[0], sys.version_info[1]))
-        self.cache_dir = path.join(self.script_dir,
-                ".py{0}{1}\\cache".format(sys.version_info[0], sys.version_info[1]))
+                ".py{0}{1}".format(sys.version_info[0], sys.version_info[1]))
         self.current_requirements = path.join(self.script_dir, self.REQUIREMENTS)
         self.last_requirements = path.join(self.pyvenv_dir, self.REQUIREMENTS)
 
@@ -51,12 +49,15 @@ class Context(object):
         self.activate_venv(["pip", "install", "-r", self.current_requirements])
 
     def pywin_install(self):
+        import tempfile
         from . import pywinpackage
+
+        temp_dir = path.join(tempfile.gettempdir(), "vebootstrap_pywinpackage")
         win_packages = pywinpackage.parse_requirements(self.current_requirements)
         if win_packages:
-            if not os.access(self.cache_dir, os.F_OK):
-                os.makedirs(self.cache_dir)
-            pywin = pywinpackage.PyWinPackages(self.cache_dir)
+            if not os.access(temp_dir, os.F_OK):
+                os.makedirs(temp_dir)
+            pywin = pywinpackage.PyWinPackages(temp_dir)
             for line_num, p in win_packages:
                 print("PyWinPackages Collecting {} (from -r {} (line {}))".format(p,
                     self.current_requirements, line_num))
