@@ -14,7 +14,7 @@ except:
 class Config(object):
     FILENAME = os.path.join(os.path.expanduser("~"), ".vebootstrap")
     DEFAULT_SETTINGS = {
-            "default_packages": ["vebootstrap", "ipython"],
+            "default_packages": ["ipython"],
             "default_windows_packages": []
             }
 

@@ -49,6 +49,7 @@ class Context(object):
         shutil.copy(self.current_requirements, self.last_requirements)
 
         # default install
+        self.activate_venv(["pip", "install", "vebootstrap"])
         for p in self.config.default_packages:
             self.activate_venv(["pip", "install", p])
 
