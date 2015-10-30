@@ -4,6 +4,7 @@ from os import path
 import sys
 import shutil
 import subprocess
+from . import config
 
 
 class Context(object):
@@ -11,6 +12,7 @@ class Context(object):
     REQUIREMENTS = "requirements.txt"
 
     def __init__(self, python_exe, script_path):
+        self.config = config.Config()
         self.script_path = path.abspath(script_path)
         self.script_dir = path.dirname(self.script_path)
         self.python_exe = path.abspath(python_exe)
@@ -45,7 +47,12 @@ class Context(object):
 
     def pip_install(self):
         shutil.copy(self.current_requirements, self.last_requirements)
-        self.activate_venv(["pip", "install", "vebootstrap"])
+
+        # default install
+        for p in self.config.default_packages:
+            self.activate_venv(["pip", "install", p])
+
+        # requirements install
         self.activate_venv(["pip", "install", "-r", self.current_requirements])
 
     def pywin_install(self):
@@ -53,16 +60,24 @@ class Context(object):
         from . import pywinpackage
 
         temp_dir = path.join(tempfile.gettempdir(), "vebootstrap_pywinpackage")
+        pywin = pywinpackage.PyWinPackages(temp_dir)
+
+        # default install
+        for i, p in enumerate(self.config.default_windows_packages):
+            print("PyWinPackages Collecting {} (from default_windows_packages {} (index {}))".format(p,
+                self.config.FILENAME, i))
+            filename = pywin.download(p)
+            self.activate_venv(["pip", "install", filename])
+
+        # requirements install
         win_packages = pywinpackage.parse_requirements(self.current_requirements)
-        if win_packages:
-            if not os.access(temp_dir, os.F_OK):
-                os.makedirs(temp_dir)
-            pywin = pywinpackage.PyWinPackages(temp_dir)
-            for line_num, p in win_packages:
-                print("PyWinPackages Collecting {} (from -r {} (line {}))".format(p,
-                    self.current_requirements, line_num))
-                filename = pywin.download(p)
-                self.activate_venv(["pip", "install", filename])
+        if not os.access(temp_dir, os.F_OK):
+            os.makedirs(temp_dir)
+        for line_num, p in win_packages:
+            print("PyWinPackages Collecting {} (from -r {} (line {}))".format(p,
+                self.current_requirements, line_num))
+            filename = pywin.download(p)
+            self.activate_venv(["pip", "install", filename])
 
     def pip_uninstall(self):
         self.activate_venv(["pip", "uninstall", "-r", self.last_requirements, "-y"])
@@ -104,11 +119,18 @@ class Context(object):
             shutil.rmtree(self.pyvenv_dir)
 
         if not os.access(self.pyvenv_dir, os.F_OK):
-            self.create_venv()
-            self.pip_install()
-            if os.name == 'nt':
-                self.pywin_install()
-            return True
+            try:
+                self.create_venv()
+                self.pip_install()
+                if os.name == 'nt':
+                    self.pywin_install()
+                return True
+            except BaseException as e:
+                sys.stderr.write("Rolling back...")
+                if os.access(self.pyvenv_dir, os.F_OK):
+                    shutil.rmtree(self.pyvenv_dir)
+                sys.stderr.write("done\n")
+                raise e
         return False
 
     def shell_execute(self, cmd, env={}, stdout=None):
