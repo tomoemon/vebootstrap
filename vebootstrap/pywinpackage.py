@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import ast
 import codecs
 import re
 import platform
@@ -57,13 +58,20 @@ def http_get(url, stream=False):
 def http_save(url, filename=None):
     if not filename:
         filename = os.path.basename(url)
-    with open(filename, 'wb') as handle:
-        response = http_get(url, stream=True)
-        while True:
-            block = response.read(8192)
-            if not block:
-                break
-            handle.write(block)
+    tmp_filename = filename + ".tmp"
+    try:
+        with open(tmp_filename, 'wb') as handle:
+            response = http_get(url, stream=True)
+            while True:
+                block = response.read(8192)
+                if not block:
+                    break
+                handle.write(block)
+        os.rename(tmp_filename, filename)
+    except BaseException as e:
+        if os.access(tmp_filename, os.F_OK):
+            os.unlink(tmp_filename)
+        raise e
     return filename
 
 
@@ -91,12 +99,15 @@ class PyWinPackages(object):
         self.cache_dir = cache_dir
 
     def list(self):
+        regex = re.compile(u'(?P<data>\\(.+\\))')
         parser = PyWinPackagesHTMLParser()
         parser.feed(http_get(BASE_URL).read().decode('utf-8'))
         packages = []
         for filename, onclick in parser.packages:
             package_name = filename.replace(u'\u2011', u'-')
-            download_url = eval(onclick.replace('javascript:', 'Locator.'))
+            match = regex.search(onclick)
+            ml, mi = ast.literal_eval(match.group('data'))
+            download_url = Locator.dl(ml, mi)
             packages.append((package_name, BASE_URL + download_url))
         return packages
 
@@ -105,10 +116,10 @@ class PyWinPackages(object):
         bit = self.platform_bit()
         package_found = []
         for filename, url in self.list():
-            package_name, version, pyver = filename.split("-", 2)
+            package_name, version, pyver = filename.split(u"-", 2)
             if install_name == package_name.lower():
                 package_found.append(filename)
-                if pyver.startswith("cp{}{}".format(sys.version_info[0], sys.version_info[1])):
+                if pyver.startswith(u"cp{}{}".format(sys.version_info[0], sys.version_info[1])):
                     if bit in filename:
                         return (filename, url)
 
@@ -142,7 +153,7 @@ class PyWinPackagesHTMLParser(HTMLParser):
             self.inner_a = False
             return
 
-        self.tmp_onclick = ([val for key, val in attrs if key=='onclick'] or [u""])[0]
+        self.tmp_onclick = ([val for key, val in attrs if key==u'onclick'] or [u""])[0]
         if self.tmp_onclick:
             self.inner_a = True
 
