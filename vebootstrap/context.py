@@ -1,10 +1,45 @@
 # -*- coding: utf-8 -*-
 import os
 from os import path
+import glob
 import sys
 import shutil
 import subprocess
 from . import config
+
+
+class TclTkDirectory(object):
+
+    @classmethod
+    def _find_tcl_base_directory(cls):
+        for p in sys.path:
+            for t in glob.glob(path.join(p, "tcl*")):
+                if path.isdir(t):
+                    return path.abspath(t)
+        return ""
+
+
+    @classmethod
+    def _find_version_directory(cls, search_pattern):
+        base = cls._find_tcl_base_directory()
+        max_name = ""
+        for t in glob.glob(path.join(base, search_pattern)):
+            if path.isdir(t):
+                if path.abspath(t) > max_name:
+                    max_name = path.abspath(t)
+        return max_name
+
+    @classmethod
+    def get_tcl_dir(cls):
+        if "TCL_LIBRARY" in os.environ:
+            return os.environ['TCL_LIBRARY']
+        return cls._find_version_directory("tcl[0123456789]*")
+
+    @classmethod
+    def get_tk_dir(cls):
+        if "TK_LIBRARY" in os.environ:
+            return os.environ['TK_LIBRARY']
+        return cls._find_version_directory("tk[0123456789]*")
 
 
 class Context(object):
@@ -65,7 +100,7 @@ class Context(object):
 
         # default install
         for i, p in enumerate(self.config.default_windows_packages):
-            print("PyWinPackages Collecting {} (from default_windows_packages {} (index {}))".format(p,
+            print("vebootstrap Collecting {} (from default_windows_packages {} (index {}))".format(p,
                 self.config.FILENAME, i))
             filename = pywin.download(p)
             self.activate_venv(["pip", "install", filename])
@@ -75,7 +110,7 @@ class Context(object):
         if not os.access(temp_dir, os.F_OK):
             os.makedirs(temp_dir)
         for line_num, p in win_packages:
-            print("PyWinPackages Collecting {} (from -r {} (line {}))".format(p,
+            print("vebootstrap Collecting {} (from -r {} (line {}))".format(p,
                 self.current_requirements, line_num))
             filename = pywin.download(p)
             self.activate_venv(["pip", "install", filename])
@@ -100,7 +135,11 @@ class Context(object):
     def activate_venv(self, cmd):
         return self.shell_execute(cmd, {
                 "PATH": self.bin_path + self.path_separator + os.environ['PATH'],
-                "VIRTUAL_ENV": self.pyvenv_dir
+                "VIRTUAL_ENV": self.pyvenv_dir,
+                # Workaround for tcl/tk in virtualenv:
+                # see https://github.com/pypa/virtualenv/issues/93
+                "TCL_LIBRARY": TclTkDirectory.get_tcl_dir(),
+                "TK_LIBRARY": TclTkDirectory.get_tk_dir(),
                 })
 
     def bootstrap(self, args):
