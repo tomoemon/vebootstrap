@@ -161,9 +161,9 @@ class Context(object):
         if not os.access(self.pyvenv_dir, os.F_OK):
             try:
                 self.create_venv()
-                self.pip_install()
                 if os.name == 'nt':
                     self.pywin_install()
+                self.pip_install()
                 return True
             except BaseException as e:
                 sys.stderr.write("Rolling back...")
