@@ -117,7 +117,8 @@ class PyWinPackages(object):
         package_found = []
         for filename, url in self.list():
             package_name, version, pyver = filename.split(u"-", 2)
-            if install_name == package_name.lower():
+            package_name = package_name.lower()
+            if install_name in (package_name, package_name.replace(u"_", u"-")):
                 package_found.append(filename)
                 if pyver.startswith(u"cp{}{}".format(sys.version_info[0], sys.version_info[1])):
                     if bit in filename:
