@@ -100,7 +100,7 @@ class Context(object):
 
         # default install
         for i, p in enumerate(self.config.default_windows_packages):
-            print("vebootstrap Collecting {} (from default_windows_packages {} (index {}))".format(p,
+            print("vebootstrap Collecting {0} (from default_windows_packages {1} (index {2}))".format(p,
                 self.config.FILENAME, i))
             filename = pywin.download(p)
             self.activate_venv(["pip", "install", filename])
@@ -110,7 +110,7 @@ class Context(object):
         if not os.access(temp_dir, os.F_OK):
             os.makedirs(temp_dir)
         for line_num, p in win_packages:
-            print("vebootstrap Collecting {} (from -r {} (line {}))".format(p,
+            print("vebootstrap Collecting {0} (from -r {1} (line {2}))".format(p,
                 self.current_requirements, line_num))
             filename = pywin.download(p)
             self.activate_venv(["pip", "install", filename])

@@ -120,7 +120,7 @@ class PyWinPackages(object):
             package_name = package_name.lower()
             if install_name in (package_name, package_name.replace(u"_", u"-")):
                 package_found.append(filename)
-                if pyver.startswith(u"cp{}{}".format(sys.version_info[0], sys.version_info[1])):
+                if pyver.startswith(u"cp{0}{1}".format(sys.version_info[0], sys.version_info[1])):
                     if bit in filename:
                         return (filename, url)
 

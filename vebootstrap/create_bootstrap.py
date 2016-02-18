@@ -51,7 +51,7 @@ def create_virtualenv_bootstrap_script(script_path, after_install_script_file):
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
-    parser = ArgumentParser(prog="python -m vebootstrap.{}".format(path.splitext(path.basename(__file__))[0]))
+    parser = ArgumentParser(prog="python -m vebootstrap.{0}".format(path.splitext(path.basename(__file__))[0]))
     parser.add_argument("--output", default="virtualenv-bootstrap.py")
     parser.add_argument("--after-install",  default="")
     args = parser.parse_args()

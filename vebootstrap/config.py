@@ -45,7 +45,7 @@ class Config(object):
         try:
             j = json.loads(codecs.open(self.FILENAME, "rb", encoding="utf-8").read())
         except ValueError as e:
-            sys.stderr.write(u"Loading config failed: {}\n".format(self.FILENAME))
+            sys.stderr.write(u"Loading config failed: {0}\n".format(self.FILENAME))
             raise e
 
         self.assert_value(j)
@@ -55,16 +55,16 @@ class Config(object):
 
 def assert_type(name, value, type_assertion):
     if not isinstance(value, type_assertion):
-        raise TypeError("{} must be {} (found: {})".format(name, type_assertion, value))
+        raise TypeError("{0} must be {1} (found: {2})".format(name, type_assertion, value))
 
 
 def assert_sequence(sequence_name, sequence, type_assertion):
     for element in sequence:
-        assert_type("item in {}".format(sequence_name), element, type_assertion)
+        assert_type("item in {0}".format(sequence_name), element, type_assertion)
 
 
 def assert_dict(dictionary_name, dictionary, key_type_assertion, value_type_assertion):
     for key, value in dictionary:
-        key_type_assertion and assert_type("key in {}".format(dictionary_name), key, key_type_assertion)
-        value_type_assertion and assert_type("value in {}".format(dictionary_name), value, value_type_assertion)
+        key_type_assertion and assert_type("key in {0}".format(dictionary_name), key, key_type_assertion)
+        value_type_assertion and assert_type("value in {0}".format(dictionary_name), value, value_type_assertion)
 
