@@ -1,6 +1,6 @@
-echo テスト用 PyPI へアップロードします
+echo �e�X�g�p PyPI �փA�b�v���[�h���܂�
 python setup.py sdist upload -r https://testpypi.python.org/pypi
-echo 次に本番 PyPI へアップロードします
+echo ���ɖ{�� PyPI �փA�b�v���[�h���܂�
 pause
 python setup.py sdist upload
-echo 本番へのアップロード完了しました
+echo �{�Ԃւ̃A�b�v���[�h�������܂���

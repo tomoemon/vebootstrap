@@ -1,7 +1,7 @@
-echo ãƒ†ã‚¹ãƒˆç”¨ PyPI ã¸ç™»éŒ²ã—ã¾ã™
+echo ƒeƒXƒg—p PyPI ‚Ö“o˜^‚µ‚Ü‚·
 python setup.py register -r https://testpypi.python.org/pypi
-echo æ¬¡ã«æœ¬ç•ª PyPI ã¸ç™»éŒ²ã—ã¾ã™
+echo Ÿ‚É–{”Ô PyPI ‚Ö“o˜^‚µ‚Ü‚·
 pause
 python setup.py register
-echo ç™»éŒ²å®Œäº†ã—ã¾ã—ãŸ
+echo “o˜^Š®—¹‚µ‚Ü‚µ‚½
 
