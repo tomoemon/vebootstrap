@@ -13,7 +13,7 @@ if os.access(path.join(path.dirname(__file__), 'README.md'), os.F_OK):
 
 setup(
     name='vebootstrap',
-    version='0.0.13',
+    version='0.0.14',
     author='tomoemon',
     author_email='bach48+github_tomoemon@gmail.com',
     packages=['vebootstrap'],
